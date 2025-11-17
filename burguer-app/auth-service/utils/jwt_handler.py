@@ -2,15 +2,17 @@ import jwt
 import datetime
 import os
 
-SECRET = os.getenv("JWT_SECRET")
+SECRET = os.getenv("SECRET_KEY")
+
 
 def generate_token(email, role):
     payload = {
         "email": email,
         "role": role,
-        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=12)
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=12),
     }
     return jwt.encode(payload, SECRET, algorithm="HS256")
+
 
 def decode_token(token):
     try:
