@@ -26,4 +26,5 @@ jobs:
 
       - name: Executar testes
         run: |
-          pytest -v
+          pytest -v --cov=models --cov=services --cov=config --cov=controllers
+          radon cc ./burguer-app/auth-service/test
