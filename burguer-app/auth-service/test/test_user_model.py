@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from models.user_model import serialize_user, UserModel
 
+
 class TestUserModel(unittest.TestCase):
 
     def setUp(self):
@@ -13,7 +14,7 @@ class TestUserModel(unittest.TestCase):
             email="teste@exemplo.com",
             name="Test User",
             address="123 Test St",
-            role="cliente"
+            role="cliente",
         )
 
     def tearDown(self):
@@ -21,26 +22,26 @@ class TestUserModel(unittest.TestCase):
         self.user_data = None
 
     def test_to_dict(self):
-        """Testa a conversão do modelo para dicionário"""
+        """Testa a conversao do modelo para o dicionario"""
         expected = {
             "email": "teste@exemplo.com",
             "name": "Test User",
             "address": "123 Test St",
-            "role": "cliente"
+            "role": "cliente",
         }
-        self.assertEqual(self.user_data.to_dict(), expected)    
+        self.assertEqual(self.user_data.to_dict(), expected)  # type: ignore
 
     def test_serialize_user_incompleto(self):
-       result = self.user_data.serialize()
-       self.assertEqual(result["email"], "teste@exemplo.com")
-       self.assertEqual(result["name"], "Test User")
-       self.assertNotIn("password", result)        
+        result = self.user_data.serialize()  # type: ignore
+        self.assertEqual(result["email"], "teste@exemplo.com")
+        self.assertEqual(result["name"], "Test User")
+        self.assertEqual(result["address"], "123 Test St")
+        self.assertEqual(result["role"], "cliente")
+        self.assertNotIn("password", result)
 
+    def test_assert_raises_exemple(self):
+        def rais_error():
+            raise ValueError("Exemplo de erro")
 
-    def test_assert_raises_example(self):
-
-      def raise_error():
-          raise ValueError("This is a test error")
-
-      with self.assertRaises(ValueError):
-            raise_error()       
+        with self.assertRaises(ValueError):
+            rais_error()
